@@ -1,0 +1,28 @@
+creation of table in hive-
+create table sal(id int, product string, quantity int, price_each int, month int, city string, sales int, count int) row format delimited fields terminated by ',' stored as textfile location '/home/hdoop/salesdata/';
+
+importing data from local disk - 
+LOAD DATA LOCAL INPATH '/home/hdoop/all_data.csv' INTO TABLE sal;
+
+Display all tables in hive-
+show tables;
+
+Data Analysis Commands - 
+
+Q1 print each month and their sales
+select month, sum(price_each*quantity) from sal group by month;
+
+Q2 print max of each month and their sales
+select month, max(price_each*quantity) from sal group by month;
+
+Q month which has max total sales
+select month, sum(price_each*quantity) as sales from sal group by month order by sales desc limit 1;
+
+Q3 print sales of each city;
+select city, sum(quantity*price_each) from sal group by city;
+
+Q city which has max total sales
+select city, sum(price_each*quantity) as sales from sal group by city order by sales desc limit 1;
+
+Q4 print max sales of each city;
+select city, max(quantity*price_each) from sal group by city;
